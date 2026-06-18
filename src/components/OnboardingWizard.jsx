@@ -13,15 +13,31 @@ export default function OnboardingWizard({ onComplete }) {
   const [step, setStep] = useState(1);
   const totalSteps = 7; // 7 lifestyle questionnaire steps
 
-  // Onboarding Form States
-  const [diet, setDiet] = useState('average');
-  const [commuteDistance, setCommuteDistance] = useState(20); // km per day
-  const [commuteVehicle, setCommuteVehicle] = useState('medium_gas');
-  const [housingHeat, setHousingHeat] = useState('gas_heating');
-  const [consumption, setConsumption] = useState('average');
-  const [flightsShort, setFlightsShort] = useState(1); // annual short haul
+  // Onboarding Form States (Initialized to clean/cleared values to prevent pre-selection on reset)
+  const [diet, setDiet] = useState('');
+  const [commuteDistance, setCommuteDistance] = useState(0); // km per day
+  const [commuteVehicle, setCommuteVehicle] = useState('');
+  const [housingHeat, setHousingHeat] = useState('');
+  const [consumption, setConsumption] = useState('');
+  const [flightsShort, setFlightsShort] = useState(0); // annual short haul
   const [flightsLong, setFlightsLong] = useState(0);  // annual long haul
-  const [houseSize, setHouseSize] = useState('medium'); // small, medium, large
+  const [houseSize, setHouseSize] = useState(''); // small, medium, large
+
+  // Step selection validation guard
+  const isStepValid = () => {
+    switch (step) {
+      case 2:
+        return diet !== '';
+      case 4:
+        return commuteDistance === 0 || commuteVehicle !== '';
+      case 6:
+        return housingHeat !== '' && houseSize !== '';
+      case 7:
+        return consumption !== '';
+      default:
+        return true;
+    }
+  };
 
   // Calculating state & animation
   const [isCalculating, setIsCalculating] = useState(false);
@@ -391,7 +407,12 @@ export default function OnboardingWizard({ onComplete }) {
               <button className="btn-editorial" style={{ color: 'var(--color-text-dark)', borderColor: 'var(--color-border-dark)' }} onClick={handleBack}>
                 <ArrowLeft size={10} style={{ marginRight: '6px' }} /> back
               </button>
-              <button className="btn-editorial btn-editorial-primary" onClick={handleNext}>
+              <button 
+                className="btn-editorial btn-editorial-primary" 
+                onClick={handleNext}
+                disabled={!isStepValid()}
+                style={{ opacity: isStepValid() ? 1 : 0.5, cursor: isStepValid() ? 'pointer' : 'not-allowed' }}
+              >
                 continue <ArrowRight size={10} style={{ marginLeft: '6px' }} />
               </button>
             </div>
@@ -402,7 +423,12 @@ export default function OnboardingWizard({ onComplete }) {
               <button className="btn-editorial" style={{ color: 'var(--color-text-dark)', borderColor: 'var(--color-border-dark)' }} onClick={handleBack}>
                 <ArrowLeft size={10} style={{ marginRight: '6px' }} /> back
               </button>
-              <button className="btn-editorial btn-editorial-primary" onClick={handleNext}>
+              <button 
+                className="btn-editorial btn-editorial-primary" 
+                onClick={handleNext}
+                disabled={!isStepValid()}
+                style={{ opacity: isStepValid() ? 1 : 0.5, cursor: isStepValid() ? 'pointer' : 'not-allowed' }}
+              >
                 calculate ledger <ArrowRight size={10} style={{ marginLeft: '6px' }} />
               </button>
             </div>

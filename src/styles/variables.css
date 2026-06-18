@@ -1,76 +1,107 @@
 :root {
-  /* Default / Day / High-Emission Theme (Fallback defaults) */
-  --color-bg-light: #EAE2D5;     /* Warm Beige / Sand */
-  --color-bg-paper: #EAE2D5;
-  --color-header-bg: rgba(234, 226, 213, 0.9);
-  --color-card-bg: #F3ECE0;
-  --color-overlay-bg: rgba(74, 21, 27, 0.15);
+  /* ==========================================================================
+     FAUNA ROBOTICS BRAND COLOR SYSTEM
+     ========================================================================== */
+  --white--900: #f8f0e3;        /* Soft Cream Sand background */
+  --brown--50: #ece4d7;         /* Warm Off-White / Sand Card BG */
+  --brown--100: #ded2c0;        /* Mid Sand */
+  --brown--200: #aca396;        /* Darker Sand */
+  --brown--300: #938a7d;        /* Deep Sand */
   
-  /* Sage Green Accent Color Palette (#595E48) */
-  --color-accent: #595E48;
-  --color-accent-light: #6B7157;
-  --color-accent-dark: #3D4131;
-  --color-accent-glow: rgba(89, 94, 72, 0.15);
+  --black--900: #180102;        /* Premium Warm off-black-burgundy */
+  --black--50: rgba(24, 1, 2, 0.05);
+  --black--100: rgba(24, 1, 2, 0.1);
+  --black--200: rgba(24, 1, 2, 0.2);
+  --black--300: rgba(24, 1, 2, 0.4);
+  --black--400: rgba(24, 1, 2, 0.6);
+  --black--500: rgba(24, 1, 2, 0.8);
+  
+  /* Primary brand highlight (replacing Fauna's orange #f16b46 with organic Sage Green) */
+  --brand--sage: #5c7562;
+  --brand--sage-light: #829887;
+  --brand--sage-dark: #3b4d3e;
+  --brand--sage-glow: rgba(92, 117, 98, 0.15);
 
-  /* Legacy color mappings for compatibility */
+  /* Secondary brand highlights */
+  --brand--blue: #63a4bc;
+  --brand--pink: #e0a5cf;
+  --brand--yellow: #dbb154;
+  --brand--green: #3dac91;       /* Luminous Mint Green */
+  --brand--brown-bright: #a7625a; /* Warm Terracotta Red */
+  --brand--khaki: #8d8465;
+
+  /* ==========================================================================
+     CORE SEMANTIC COLORS (FALLBACK DEFAULTS / DAY)
+     ========================================================================== */
+  --color-bg-light: var(--white--900);
+  --color-bg-paper: var(--white--900);
+  --color-header-bg: rgba(248, 240, 227, 0.95);
+  --color-card-bg: var(--brown--50);
+  --color-overlay-bg: rgba(24, 1, 2, 0.15);
+  
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
+
+  /* Legacy mappings for components using burgundy/copper */
   --color-burgundy: var(--color-accent);
   --color-burgundy-light: var(--color-accent-light);
   --color-burgundy-dark: var(--color-accent-dark);
   --color-burgundy-glow: var(--color-accent-glow);
   
-  --color-text-dark: #131414;     /* High Contrast Charcoal */
-  --color-text-muted: #565D58;    
-  --color-bone: #F7F4EF;          /* Soft Off-White for dark sections */
+  --color-text-dark: var(--black--900);
+  --color-text-muted: var(--black--400);
+  --color-bone: var(--white--900);
   
   /* Earth-toned accents */
-  --color-dusty-blue: #596F88;    /* The Footprint Firm secondary theme */
-  --color-dusty-blue-glow: rgba(89, 111, 136, 0.15);
+  --color-dusty-blue: var(--brand--sage);
+  --color-dusty-blue-glow: var(--brand--sage-glow);
   
-  --color-sage: #809686;          /* Organic Sage */
-  --color-sage-light: #A5B5A9;
+  --color-sage: var(--brand--sage);
+  --color-sage-light: var(--brand--sage-light);
   
-  --color-copper: #D4764B;        /* Earthy Terracotta */
-  --color-amber: #E2A13B;         /* Warm Ochre */
+  --color-copper: var(--brand--brown-bright);
+  --color-amber: var(--brand--yellow);
 
-  /* Category Badge Colors */
-  --color-cat-diet: #8E3D39;
-  --color-cat-transport: #3B5A7A;
-  --color-cat-household: #4B5F4E;
-  --color-cat-consumption: #A85F32;
+  /* Category Badge Colors mapped to brand palette */
+  --color-cat-diet: var(--brand--brown-bright);
+  --color-cat-transport: var(--brand--blue);
+  --color-cat-household: var(--brand--sage);
+  --color-cat-consumption: var(--brand--yellow);
 
   /* Borders & Grid lines */
-  --color-border-dark: rgba(19, 20, 20, 0.08); /* Minimalist thin grids */
-  --color-border-light: rgba(247, 244, 239, 0.12);
-  --color-border-accent: rgba(89, 94, 72, 0.25);
+  --color-border-dark: var(--black--100);
+  --color-border-light: rgba(248, 240, 227, 0.15);
+  --color-border-accent: rgba(92, 117, 98, 0.25);
 
-  /* Fonts (Outfit is the closest match to MarkPro) */
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  /* Typography Fonts (Matter and ABC Maxi) */
+  --font-display: 'ABC Maxi', 'Outfit', sans-serif;
+  --font-body: 'Matter', 'Plus Jakarta Sans', sans-serif;
 
-  /* Layout Scales */
-  --radius-xs: 0px;  /* Flat layout angles, editorial print design */
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
+  /* Layout Scales (Approachability roundedness adjustments) */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 32px;
   
-  /* Shadows (Minimal, flat paper borders used instead) */
+  /* Shadows (Minimal borders and flat paper offsets) */
   --shadow-tactile: none;
-  --shadow-flat: 2px 2px 0px rgba(19, 20, 20, 0.1);
-  --shadow-flat-dark: 2px 2px 0px rgba(247, 244, 239, 0.15);
+  --shadow-flat: 2px 2px 0px var(--black--100);
+  --shadow-flat-dark: 2px 2px 0px rgba(248, 240, 227, 0.15);
   
   /* Transitions */
   --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   --transition-spring: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Adaptive Control and Input Colors */
-  --color-track-bg: rgba(19, 20, 20, 0.08);
-  --color-input-bg: rgba(19, 20, 20, 0.01);
-  --color-input-focus-bg: rgba(19, 20, 20, 0.03);
-  --color-card-hover-bg: rgba(74, 21, 27, 0.02);
-  --color-scrollbar-thumb: rgba(74, 21, 27, 0.25);
+  --color-track-bg: var(--black--100);
+  --color-input-bg: var(--black--50);
+  --color-input-focus-bg: var(--black--100);
+  --color-card-hover-bg: rgba(92, 117, 98, 0.05);
+  --color-scrollbar-thumb: rgba(92, 117, 98, 0.25);
   
-  /* Noise Overlay Opacity Default */
   --noise-opacity: 0.02;
 }
 
@@ -82,71 +113,71 @@
    DAWN THEMES (06:00 - 09:00) - Soft Peachy Rose Glow
    ---------------------------------------------------- */
 .theme-dawn-high-emission {
-  --color-bg-light: #EEDAD2;
-  --color-header-bg: rgba(238, 218, 210, 0.9);
-  --color-card-bg: #F5E5DE;
-  --color-accent: #A3545A; /* Ash Burgundy */
-  --color-accent-light: #B86F74;
-  --color-accent-dark: #5C272C;
-  --color-accent-glow: rgba(163, 84, 90, 0.15);
-  --noise-opacity: 0.055;
+  --color-bg-light: #f8e9ea;
+  --color-header-bg: rgba(248, 233, 234, 0.95);
+  --color-card-bg: #f9e2e4;
+  --color-accent: var(--brand--pink);
+  --color-accent-light: #ebbade;
+  --color-accent-dark: #b8629f;
+  --color-accent-glow: rgba(224, 165, 207, 0.2);
+  --noise-opacity: 0.04;
 }
 
 .theme-dawn-balanced {
-  --color-bg-light: #F2E3CD;
-  --color-header-bg: rgba(242, 227, 205, 0.9);
-  --color-card-bg: #F7EAD7;
-  --color-accent: #CE843F; /* Soft dawn copper */
-  --color-accent-light: #E09C5A;
-  --color-accent-dark: #7A4215;
-  --color-accent-glow: rgba(206, 132, 63, 0.15);
-  --noise-opacity: 0.035;
+  --color-bg-light: #f8ebe3;
+  --color-header-bg: rgba(248, 235, 227, 0.95);
+  --color-card-bg: #fae4d7;
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
+  --noise-opacity: 0.03;
 }
 
 .theme-dawn-efficient {
-  --color-bg-light: #ECE8DF;
-  --color-header-bg: rgba(236, 232, 223, 0.9);
-  --color-card-bg: #F1EEE6;
-  --color-accent: #556D5C; /* Clean dawn sage */
-  --color-accent-light: #6A8572;
-  --color-accent-dark: #2F3E34;
-  --color-accent-glow: rgba(85, 109, 92, 0.15);
-  --noise-opacity: 0.012;
+  --color-bg-light: #f4eae6;
+  --color-header-bg: rgba(244, 234, 230, 0.95);
+  --color-card-bg: #fae2db;
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
+  --noise-opacity: 0.015;
 }
 
 /* ----------------------------------------------------
    DAY THEMES (09:00 - 17:00) - Clean Sand Editorial
    ---------------------------------------------------- */
 .theme-day-high-emission {
-  --color-bg-light: #EAE2D5;
-  --color-header-bg: rgba(234, 226, 213, 0.9);
-  --color-card-bg: #F3ECE0;
-  --color-accent: #7C2A34; /* Rich Crimson-Burgundy */
-  --color-accent-light: #9B3D48;
-  --color-accent-dark: #471217;
-  --color-accent-glow: rgba(124, 42, 52, 0.15);
-  --noise-opacity: 0.05;
+  --color-bg-light: var(--white--900);
+  --color-header-bg: rgba(248, 240, 227, 0.95);
+  --color-card-bg: var(--brown--50);
+  --color-accent: var(--brand--brown-bright);
+  --color-accent-light: #be7a71;
+  --color-accent-dark: #773f38;
+  --color-accent-glow: rgba(167, 98, 90, 0.15);
+  --noise-opacity: 0.04;
 }
 
 .theme-day-balanced {
-  --color-bg-light: #EADFD0;
-  --color-header-bg: rgba(234, 223, 208, 0.9);
-  --color-card-bg: #F1E7DA;
-  --color-accent: #B46A3D; /* Earthy Copper */
-  --color-accent-light: #CC8257;
-  --color-accent-dark: #6B3416;
-  --color-accent-glow: rgba(180, 106, 61, 0.15);
-  --noise-opacity: 0.03;
+  --color-bg-light: var(--white--900);
+  --color-header-bg: rgba(248, 240, 227, 0.95);
+  --color-card-bg: var(--brown--50);
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
+  --noise-opacity: 0.02;
 }
 
 .theme-day-efficient {
-  --color-bg-light: #E6E8E2;
-  --color-header-bg: rgba(230, 232, 226, 0.9);
-  --color-card-bg: #EDEEEA;
-  --color-accent: #4B5F4E; /* Clean Forest Sage */
-  --color-accent-light: #5F7763;
-  --color-accent-dark: #2A382C;
-  --color-accent-glow: rgba(75, 95, 78, 0.15);
+  --color-bg-light: var(--white--900);
+  --color-header-bg: rgba(248, 240, 227, 0.95);
+  --color-card-bg: var(--brown--50);
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
   --noise-opacity: 0.01;
 }
 
@@ -154,35 +185,35 @@
    DUSK THEMES (17:00 - 20:00) - Golden Sunset Glow
    ---------------------------------------------------- */
 .theme-dusk-high-emission {
-  --color-bg-light: #DFCECA;
-  --color-header-bg: rgba(223, 206, 202, 0.9);
-  --color-card-bg: #E7D8D5;
-  --color-accent: #8E3D39; /* Dusty Sunset Red */
-  --color-accent-light: #A55551;
-  --color-accent-dark: #521E1B;
-  --color-accent-glow: rgba(142, 61, 57, 0.15);
-  --noise-opacity: 0.06;
+  --color-bg-light: #eedec2;
+  --color-header-bg: rgba(238, 222, 194, 0.95);
+  --color-card-bg: #ebd4af;
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
+  --noise-opacity: 0.05;
 }
 
 .theme-dusk-balanced {
-  --color-bg-light: #E5D5C1;
-  --color-header-bg: rgba(229, 213, 193, 0.9);
-  --color-card-bg: #ECDDCB;
-  --color-accent: #C2773A; /* Intense Sunset Gold */
-  --color-accent-light: #D68F53;
-  --color-accent-dark: #733F17;
-  --color-accent-glow: rgba(194, 119, 58, 0.15);
-  --noise-opacity: 0.035;
+  --color-bg-light: #f7edd6;
+  --color-header-bg: rgba(247, 237, 214, 0.95);
+  --color-card-bg: #fae6cb;
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
+  --noise-opacity: 0.03;
 }
 
 .theme-dusk-efficient {
-  --color-bg-light: #DFDECF;
-  --color-header-bg: rgba(223, 222, 207, 0.9);
-  --color-card-bg: #E6E5D9;
-  --color-accent: #5A6E53; /* Twilight Green */
-  --color-accent-light: #708569;
-  --color-accent-dark: #32412E;
-  --color-accent-glow: rgba(90, 110, 83, 0.15);
+  --color-bg-light: #f0ebdd;
+  --color-header-bg: rgba(240, 235, 221, 0.95);
+  --color-card-bg: #ebdcb6;
+  --color-accent: var(--brand--sage);
+  --color-accent-light: var(--brand--sage-light);
+  --color-accent-dark: var(--brand--sage-dark);
+  --color-accent-glow: var(--brand--sage-glow);
   --noise-opacity: 0.015;
 }
 
@@ -190,88 +221,70 @@
    NIGHT THEMES (20:00 - 06:00) - Soothing Dark Modes
    ---------------------------------------------------- */
 .theme-night-high-emission {
-  --color-bg-light: #1D1617;
-  --color-header-bg: rgba(29, 22, 23, 0.9);
-  --color-card-bg: #272021;
-  --color-accent: #DE404E; /* Premium Crimson Red instead of pink */
-  --color-accent-light: #EB7F89;
-  --color-accent-dark: #421114;
-  --color-accent-glow: rgba(222, 64, 78, 0.2);
-  --color-text-dark: #ECE4E5;
-  --color-text-muted: #9E8F91;
-  --color-border-dark: rgba(255, 255, 255, 0.12);
-  --color-bone: #F7F4EF; /* Corrected to constant light bone */
-  --color-overlay-bg: rgba(222, 64, 78, 0.12);
+  --color-bg-light: var(--black--900);
+  --color-header-bg: rgba(24, 1, 2, 0.95);
+  --color-card-bg: #240c0d;
+  --color-accent: var(--brand--pink);
+  --color-accent-light: #ebbade;
+  --color-accent-dark: #4d183f;
+  --color-accent-glow: rgba(224, 165, 207, 0.25);
+  --color-text-dark: var(--white--900);
+  --color-text-muted: var(--brown--200);
+  --color-border-dark: rgba(248, 240, 227, 0.12);
+  --color-bone: var(--white--900);
+  --color-overlay-bg: rgba(224, 165, 207, 0.12);
   --noise-opacity: 0.08;
 
-  /* Category Badge Overrides */
-  --color-cat-diet: #EB7F89;
-  --color-cat-transport: #9EC0E6;
-  --color-cat-household: #8CD9A5;
-  --color-cat-consumption: #F0B060;
-
   /* Night-specific adaptive controls */
-  --color-track-bg: rgba(247, 244, 239, 0.15);
-  --color-input-bg: rgba(247, 244, 239, 0.05);
-  --color-input-focus-bg: rgba(247, 244, 239, 0.08);
-  --color-card-hover-bg: rgba(222, 64, 78, 0.08);
-  --color-scrollbar-thumb: rgba(247, 244, 239, 0.3);
+  --color-track-bg: rgba(248, 240, 227, 0.15);
+  --color-input-bg: rgba(248, 240, 227, 0.05);
+  --color-input-focus-bg: rgba(248, 240, 227, 0.08);
+  --color-card-hover-bg: rgba(224, 165, 207, 0.08);
+  --color-scrollbar-thumb: rgba(248, 240, 227, 0.3);
 }
 
 .theme-night-balanced {
-  --color-bg-light: #1A1A17;
-  --color-header-bg: rgba(26, 26, 23, 0.9);
-  --color-card-bg: #232320;
-  --color-accent: #F0B060; /* Vibrant Golden Ochre */
-  --color-accent-light: #F5C588;
-  --color-accent-dark: #4E341A;
-  --color-accent-glow: rgba(240, 176, 96, 0.2);
-  --color-text-dark: #ECE8E3;
-  --color-text-muted: #99938B;
-  --color-border-dark: rgba(255, 255, 255, 0.1);
-  --color-bone: #F7F4EF; /* Corrected to constant light bone */
-  --color-overlay-bg: rgba(240, 176, 96, 0.08);
+  --color-bg-light: var(--black--900);
+  --color-header-bg: rgba(24, 1, 2, 0.95);
+  --color-card-bg: #240c0d;
+  --color-accent: var(--brand--sage-light);
+  --color-accent-light: #a9bea9;
+  --color-accent-dark: #223725;
+  --color-accent-glow: rgba(138, 162, 143, 0.25);
+  --color-text-dark: var(--white--900);
+  --color-text-muted: var(--brown--200);
+  --color-border-dark: rgba(248, 240, 227, 0.1);
+  --color-bone: var(--white--900);
+  --color-overlay-bg: rgba(138, 162, 143, 0.08);
   --noise-opacity: 0.055;
 
-  /* Category Badge Overrides */
-  --color-cat-diet: #FF808A;
-  --color-cat-transport: #9EC0E6;
-  --color-cat-household: #8CD9A5;
-  --color-cat-consumption: #F0B060;
-
   /* Night-specific adaptive controls */
-  --color-track-bg: rgba(247, 244, 239, 0.15);
-  --color-input-bg: rgba(247, 244, 239, 0.05);
-  --color-input-focus-bg: rgba(247, 244, 239, 0.08);
-  --color-card-hover-bg: rgba(240, 176, 96, 0.08);
-  --color-scrollbar-thumb: rgba(247, 244, 239, 0.3);
+  --color-track-bg: rgba(248, 240, 227, 0.15);
+  --color-input-bg: rgba(248, 240, 227, 0.05);
+  --color-input-focus-bg: rgba(248, 240, 227, 0.08);
+  --color-card-hover-bg: rgba(138, 162, 143, 0.08);
+  --color-scrollbar-thumb: rgba(248, 240, 227, 0.3);
 }
 
 .theme-night-efficient {
-  --color-bg-light: #131614;
-  --color-header-bg: rgba(19, 22, 20, 0.9);
-  --color-card-bg: #1C201D;
-  --color-accent: #8CD9A5; /* Bright Luminous Mint/Sage */
-  --color-accent-light: #A7E4BB;
-  --color-accent-dark: #203527;
-  --color-accent-glow: rgba(140, 217, 165, 0.2);
-  --color-text-dark: #E4ECE6;
-  --color-text-muted: #8C9990;
-  --color-border-dark: rgba(255, 255, 255, 0.08);
-  --color-bone: #F7F4EF; /* Corrected to constant light bone */
-  --color-overlay-bg: rgba(140, 217, 165, 0.05);
+  --color-bg-light: var(--black--900);
+  --color-header-bg: rgba(24, 1, 2, 0.95);
+  --color-card-bg: #240c0d;
+  --color-accent: var(--brand--sage-light);
+  --color-accent-light: #a9bea9;
+  --color-accent-dark: #223725;
+  --color-accent-glow: rgba(138, 162, 143, 0.25);
+  --color-text-dark: var(--white--900);
+  --color-text-muted: var(--brown--200);
+  --color-border-dark: rgba(248, 240, 227, 0.08);
+  --color-bone: var(--white--900);
+  --color-overlay-bg: rgba(61, 172, 145, 0.05);
   --noise-opacity: 0.025;
 
-  /* Category Badge Overrides */
-  --color-cat-diet: #FF808A;
-  --color-cat-transport: #9EC0E6;
-  --color-cat-household: #8CD9A5;
-  --color-cat-consumption: #F0B060;
-
   /* Night-specific adaptive controls */
-  --color-track-bg: rgba(247, 244, 239, 0.15);
-  --color-input-bg: rgba(247, 244, 239, 0.05);
-  --color-input-focus-bg: rgba(247, 244, 239, 0.08);
-  --color-card-hover-bg: rgba(140, 217, 165, 0.08);
-  --color-scrollbar-thumb: rgba(247, 244, 239, 0.3);
+  --color-track-bg: rgba(248, 240, 227, 0.15);
+  --color-input-bg: rgba(248, 240, 227, 0.05);
+  --color-input-focus-bg: rgba(248, 240, 227, 0.08);
+  --color-card-hover-bg: rgba(61, 172, 145, 0.08);
+  --color-scrollbar-thumb: rgba(248, 240, 227, 0.3);
 }

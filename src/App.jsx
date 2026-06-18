@@ -4,7 +4,7 @@ import AtmosphericOrbitGauge from './components/AtmosphericOrbitGauge';
 import HabitLedger from './components/HabitLedger';
 import BentoGrid from './components/BentoGrid';
 import SidebarLogs from './components/SidebarLogs';
-import { RefreshCw, Layers, Compass, Leaf, Award, Flame, Volume2, VolumeX } from 'lucide-react';
+import { RefreshCw, Layers, Compass, Leaf, Award, Flame, Volume2, VolumeX, Sun, Moon } from 'lucide-react';
 import soundManager from './data/ecoSoundManager';
 import './styles/global.css';
 import './styles/components.css';
@@ -15,6 +15,15 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [themePreference, setThemePreference] = useState(() => {
+    return localStorage.getItem('ecosync_theme') || 'auto';
+  });
+  const [resetCount, setResetCount] = useState(0);
+
+  // Sync theme preference to localStorage
+  useEffect(() => {
+    localStorage.setItem('ecosync_theme', themePreference);
+  }, [themePreference]);
 
   // Load profile and logs from localStorage on mount (Defensive QA parsing checks)
   useEffect(() => {
@@ -86,9 +95,20 @@ export default function App() {
     }
   }, [profile, logs, loading]);
 
-  // Time-of-day calculation (Automatically computes based on system time)
+  // Time-of-day calculation (Automatically computes based on system time & user overrides)
   const getTimeOfDay = () => {
-    // Force 'night' dark mode theme if the user's system preferences or automated test contexts specify dark scheme
+    if (themePreference === 'dark') {
+      return 'night';
+    }
+    if (themePreference === 'light') {
+      const hour = new Date().getHours();
+      if (hour >= 6 && hour < 9) return 'dawn';
+      if (hour >= 9 && hour < 17) return 'day';
+      if (hour >= 17 && hour < 20) return 'dusk';
+      return 'day'; // Night falls back to Day for forced light mode
+    }
+
+    // Auto / System Mode
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'night';
     }
@@ -117,10 +137,19 @@ export default function App() {
   // Reset profile to do onboarding again
   const handleResetProfile = () => {
     soundManager.playClick();
-    if (window.confirm("Do you want to clear your baseline profile and run the onboarding questions again?")) {
+    let shouldReset = false;
+    try {
+      shouldReset = window.confirm("Do you want to clear your baseline profile and run the onboarding questions again?");
+    } catch (e) {
+      console.warn("window.confirm blocked or failed in sandbox, resetting directly:", e);
+      shouldReset = true;
+    }
+    
+    if (shouldReset) {
       soundManager.playDelete();
       setProfile(null);
       setLogs([]);
+      setResetCount(prev => prev + 1);
       localStorage.removeItem('ecosync_profile');
       localStorage.removeItem('ecosync_logs');
     }
@@ -188,7 +217,9 @@ export default function App() {
 
   // Time & State Classes for styling overrides
   const timeOfDay = getTimeOfDay();
-  const carbonState = getCarbonState(totalSavings, profile.baselineDaily, profile.dailyBudget);
+  const carbonState = profile 
+    ? getCarbonState(totalSavings, profile.baselineDaily, profile.dailyBudget)
+    : 'high-emission';
   const themeClass = `theme-${timeOfDay}-${carbonState}`;
 
   return (
@@ -198,7 +229,7 @@ export default function App() {
 
       {/* Onboarding Wizard - if no profile exists */}
       {!profile ? (
-        <OnboardingWizard onComplete={handleOnboardingComplete} />
+        <OnboardingWizard key={resetCount} onComplete={handleOnboardingComplete} />
       ) : (
         <>
           {/* Header */}
@@ -209,6 +240,18 @@ export default function App() {
             </div>
             
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <button 
+                onClick={() => {
+                  soundManager.playClick();
+                  setThemePreference(prev => prev === 'dark' ? 'light' : 'dark');
+                }} 
+                className="btn-editorial" 
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }}
+                title={themePreference === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                {themePreference === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+              </button>
+
               <button 
                 onClick={() => { soundManager.playClick(); setSidebarOpen(true); }} 
                 className="btn-editorial" 
