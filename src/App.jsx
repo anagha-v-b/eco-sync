@@ -168,10 +168,14 @@ export default function App() {
 
   // Log a carbon saving habit
   const handleLogHabit = (habit) => {
+    if (!habit || typeof habit.title !== 'string' || typeof habit.impact !== 'number' || typeof habit.category !== 'string') {
+      console.error("Invalid habit logged:", habit);
+      return;
+    }
     const newLog = {
       id: Date.now().toString(),
       title: habit.title,
-      impact: habit.impact,
+      impact: Number(habit.impact) || 0,
       category: habit.category,
       timeString: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };

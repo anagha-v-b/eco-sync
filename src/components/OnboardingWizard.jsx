@@ -115,19 +115,19 @@ export default function OnboardingWizard({ onComplete }) {
   };
 
   const calculateAndFinish = () => {
-    const dietEmissions = DIET_COEFFICIENTS[diet];
-    const transportEmissions = commuteDistance * (TRANSPORT_COEFFICIENTS[commuteVehicle] || 0);
-    let housingBase = HOUSING_COEFFICIENTS[housingHeat];
+    const dietEmissions = DIET_COEFFICIENTS[diet] || 0;
+    const transportEmissions = (Number(commuteDistance) || 0) * (TRANSPORT_COEFFICIENTS[commuteVehicle] || 0);
+    let housingBase = HOUSING_COEFFICIENTS[housingHeat] || 0;
     if (houseSize === 'small') housingBase *= 0.7;
     if (houseSize === 'large') housingBase *= 1.4;
     const housingEmissions = housingBase;
-    const consumptionEmissions = CONSUMPTION_COEFFICIENTS[consumption];
-    const annualFlightEmissions = (flightsShort * 180) + (flightsLong * 1100);
+    const consumptionEmissions = CONSUMPTION_COEFFICIENTS[consumption] || 0;
+    const annualFlightEmissions = ((Number(flightsShort) || 0) * 180) + ((Number(flightsLong) || 0) * 1100);
     const flightEmissionsDaily = annualFlightEmissions / 365;
 
     const totalDailyBaseline = Number(
       (dietEmissions + transportEmissions + housingEmissions + consumptionEmissions + flightEmissionsDaily).toFixed(1)
-    );
+    ) || 0;
 
     const profile = {
       diet,
