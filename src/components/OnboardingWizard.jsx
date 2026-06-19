@@ -116,7 +116,7 @@ export default function OnboardingWizard({ onComplete }) {
 
   const calculateAndFinish = () => {
     const dietEmissions = DIET_COEFFICIENTS[diet];
-    const transportEmissions = commuteDistance * TRANSPORT_COEFFICIENTS[commuteVehicle];
+    const transportEmissions = commuteDistance * (TRANSPORT_COEFFICIENTS[commuteVehicle] || 0);
     let housingBase = HOUSING_COEFFICIENTS[housingHeat];
     if (houseSize === 'small') housingBase *= 0.7;
     if (houseSize === 'large') housingBase *= 1.4;

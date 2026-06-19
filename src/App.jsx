@@ -243,13 +243,16 @@ export default function App() {
               <button 
                 onClick={() => {
                   soundManager.playClick();
-                  setThemePreference(prev => prev === 'dark' ? 'light' : 'dark');
+                  setThemePreference(prev => {
+                    const isDark = prev === 'dark' || (prev === 'auto' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    return isDark ? 'light' : 'dark';
+                  });
                 }} 
                 className="btn-editorial" 
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }}
-                title={themePreference === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                title={timeOfDay === 'night' ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
-                {themePreference === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+                {timeOfDay === 'night' ? <Sun size={14} /> : <Moon size={14} />}
               </button>
 
               <button 

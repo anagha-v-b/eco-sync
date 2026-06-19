@@ -4,14 +4,11 @@ import { X, Trash2, CalendarRange } from 'lucide-react';
 export default function SidebarLogs({ isOpen, onClose, logs, onDeleteLog }) {
   return (
     <>
-      {/* Dimmed backdrop background */}
+      {/* Dimmed backdrop background wrapping the sliding sidebar container */}
       <div 
         className={`sidebar-overlay ${isOpen ? 'active' : ''}`} 
         onClick={onClose}
-      />
-      
-      {/* Sliding sidebar container */}
-      <div className={`sidebar-overlay ${isOpen ? 'active' : ''}`} style={{ background: 'transparent' }}>
+      >
         <div className="sidebar-container" onClick={(e) => e.stopPropagation()}>
           <div className="sidebar-header">
             <div>
