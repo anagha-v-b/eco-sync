@@ -428,7 +428,7 @@ export default function App() {
           {/* Editorial Footer */}
           <footer style={{ borderTop: '1px solid var(--color-border-dark)', padding: '40px 5%', fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'center', background: 'rgba(19, 20, 20, 0.02)' }}>
             <p style={{ textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
-              EcoSync — Inspired by the intersection of knowledge, value creation and capital.
+              EcoSync — Balancing everyday choices with global ecological budgets.
             </p>
             <p>© {new Date().getFullYear()} EcoSync ledger. All rights reserved.</p>
           </footer>
