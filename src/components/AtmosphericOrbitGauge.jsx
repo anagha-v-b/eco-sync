@@ -6,6 +6,54 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
   const [viewMode, setViewMode] = React.useState('split'); // Default to split card mode as requested by user
   const [infoOpen, setInfoOpen] = React.useState(false);
 
+  const infoButtonRef = React.useRef(null);
+  const closeButtonRef = React.useRef(null);
+  const modalRef = React.useRef(null);
+  React.useEffect(() => {
+    if (infoOpen) {
+      // Focus close button on open
+      closeButtonRef.current?.focus();
+
+      // Esc key handler
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') {
+          setInfoOpen(false);
+          infoButtonRef.current?.focus();
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+
+      // Focus trapping
+      const handleFocusTrap = (e) => {
+        if (!modalRef.current) return;
+        const focusableElements = modalRef.current.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusableElements.length === 0) return;
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              lastElement.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              firstElement.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      };
+      window.addEventListener('keydown', handleFocusTrap);
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('keydown', handleFocusTrap);
+      };
+    }
+  }, [infoOpen]);
+
   // Calculate carbon savings dynamically
   const carbonSaved = Math.max(0, baseline - currentBalance);
   
@@ -143,7 +191,7 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
           maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
         }}>
-          <svg style={{ width: '100%', height: '100%', display: 'block' }} viewBox="0 0 400 220" preserveAspectRatio="none">
+          <svg style={{ width: '100%', height: '100%', display: 'block' }} viewBox="0 0 400 220" preserveAspectRatio="none" aria-hidden="true">
             <defs>
               <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor={domeColor} stopOpacity="0.22" />
@@ -166,7 +214,7 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
 
           {/* Floating interactive particles */}
           {particles.map(p => (
-            <div
+            <button
               key={p.id}
               onClick={(e) => handleParticleClick(e, p.id)}
               style={{
@@ -184,8 +232,11 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
                 boxShadow: p.type === 'soot' 
                   ? 'none' 
                   : '0 0 6px var(--color-accent-light)',
-                transition: 'background-color 0.8s ease'
+                transition: 'background-color 0.8s ease',
+                border: 'none',
+                padding: 0
               }}
+              aria-label={p.type === 'soot' ? 'Exceeds Budget Soot - Click to Clean!' : 'Clean Air Bubble - Click to Pop!'}
               title={p.type === 'soot' ? 'Exceeds Budget Soot - Click to Clean!' : 'Clean Air Bubble - Click to Pop!'}
             />
           ))}
@@ -349,7 +400,10 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
         {/* Footer Info & Target */}
         <div style={{ borderTop: '1px solid var(--color-border-dark)', paddingTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', width: '100%', position: 'relative', zIndex: 2 }}>
           <button 
+            ref={infoButtonRef}
             onClick={() => setInfoOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={infoOpen}
             style={{ 
               background: 'none', 
               border: 'none', 
@@ -372,22 +426,28 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
 
         {/* Info Modal Glass Overlay (updated colors for sand theme) */}
         {infoOpen && (
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(24, 1, 2, 0.95)',
-            backdropFilter: 'blur(8px)',
-            WebkitBackdropFilter: 'blur(8px)',
-            borderRadius: 'var(--radius-lg)',
-            zIndex: 20,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            padding: '32px',
-            color: 'var(--color-bone)',
-            textAlign: 'left'
-          }}>
-            <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: '8px', letterSpacing: '0.05em' }}>
+          <div 
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="savings-modal-title"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(24, 1, 2, 0.95)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              borderRadius: 'var(--radius-lg)',
+              zIndex: 20,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              padding: '32px',
+              color: 'var(--color-bone)',
+              textAlign: 'left'
+            }}
+          >
+            <h4 id="savings-modal-title" style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem', textTransform: 'uppercase', color: 'var(--color-accent)', marginBottom: '8px', letterSpacing: '0.05em' }}>
               How are savings calculated?
             </h4>
             <p style={{ fontSize: '0.75rem', lineHeight: 1.4, color: 'rgba(248, 240, 227, 0.85)', marginBottom: '16px' }}>
@@ -399,7 +459,13 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
               <div>● <strong>Pine Tree:</strong> 1 full pine tree day absorption (~6.0 kg offset)</div>
             </div>
             <button 
-              onClick={() => setInfoOpen(false)}
+              ref={closeButtonRef}
+              onClick={() => {
+                setInfoOpen(false);
+                setTimeout(() => {
+                  infoButtonRef.current?.focus();
+                }, 0);
+              }}
               style={{
                 background: 'var(--color-accent)',
                 border: 'none',
@@ -435,7 +501,7 @@ export default function AtmosphericOrbitGauge({ currentBalance, dailyBudget, bas
       </div>
       
       <div className="gauge-svg-container">
-        <svg className="gauge-svg" viewBox="0 0 240 240">
+        <svg className="gauge-svg" viewBox="0 0 240 240" aria-hidden="true">
           {/* Outer circle track */}
           <circle 
             cx="120" 

@@ -163,7 +163,6 @@ button, input, select {
   border: 1px solid var(--color-text-dark);
   color: var(--color-text-dark);
   position: relative;
-  outline: none;
 }
 
 .btn-editorial:hover {
@@ -218,7 +217,6 @@ button, input, select {
   font-family: var(--font-body);
   color: var(--color-text-dark);
   transition: var(--transition-smooth);
-  outline: none;
 }
 
 .input-editorial:focus {
@@ -284,3 +282,29 @@ button, input, select {
               border-color 0.8s cubic-bezier(0.25, 1, 0.5, 1),
               opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+/* Accessibility Focus Outline styling */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+.btn-editorial:focus-visible,
+.input-editorial:focus-visible,
+.btn-log-habit:focus-visible,
+.selection-card:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 2px !important;
+}
+
+/* Screen-reader-only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+

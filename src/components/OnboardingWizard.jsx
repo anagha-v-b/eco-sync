@@ -171,23 +171,23 @@ export default function OnboardingWizard({ onComplete }) {
           <div className="wizard-slide">
             <h2 className="onboarding-question-title">what is your dietary profile?</h2>
             <p className="onboarding-description">Your diet has a direct impact on land usage and global methane levels.</p>
-            <div className="selection-grid">
-              <div className={`selection-card ${diet === 'meat_heavy' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('meat_heavy'); }}>
+            <div className="selection-grid" role="radiogroup" aria-label="Dietary profile options">
+              <button type="button" className={`selection-card ${diet === 'meat_heavy' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('meat_heavy'); }} aria-checked={diet === 'meat_heavy'} role="radio">
                 <h4>meat heavy</h4>
                 <p>Eat animal proteins in almost every meal daily.</p>
-              </div>
-              <div className={`selection-card ${diet === 'average' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('average'); }}>
+              </button>
+              <button type="button" className={`selection-card ${diet === 'average' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('average'); }} aria-checked={diet === 'average'} role="radio">
                 <h4>balanced mixed</h4>
                 <p>Standard diet, with occasional vegetarian meals.</p>
-              </div>
-              <div className={`selection-card ${diet === 'vegetarian' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('vegetarian'); }}>
+              </button>
+              <button type="button" className={`selection-card ${diet === 'vegetarian' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('vegetarian'); }} aria-checked={diet === 'vegetarian'} role="radio">
                 <h4>vegetarian</h4>
                 <p>Exclude meat and fish, but consume eggs and dairy.</p>
-              </div>
-              <div className={`selection-card ${diet === 'vegan' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('vegan'); }}>
+              </button>
+              <button type="button" className={`selection-card ${diet === 'vegan' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setDiet('vegan'); }} aria-checked={diet === 'vegan'} role="radio">
                 <h4>fully vegan</h4>
                 <p>Strictly plant-based. Zero animal products.</p>
-              </div>
+              </button>
             </div>
           </div>
         );
@@ -205,6 +205,7 @@ export default function OnboardingWizard({ onComplete }) {
                 value={commuteDistance} 
                 onChange={(e) => setCommuteDistance(Number(e.target.value))} 
                 className="slider-input"
+                aria-label="Daily commute distance in kilometers"
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--color-sage-light)', opacity: 0.6 }}>
                 <span>0 km</span>
@@ -219,27 +220,27 @@ export default function OnboardingWizard({ onComplete }) {
           <div className="wizard-slide">
             <h2 className="onboarding-question-title">primary transit mode?</h2>
             <p className="onboarding-description">Select the vehicle type representing the majority of your daily commute distance.</p>
-            <div className="selection-grid">
-              <div className={`selection-card ${commuteVehicle === 'large_gas' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('large_gas'); }}>
+            <div className="selection-grid" role="radiogroup" aria-label="Primary transit mode options">
+              <button type="button" className={`selection-card ${commuteVehicle === 'large_gas' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('large_gas'); }} aria-checked={commuteVehicle === 'large_gas'} role="radio">
                 <h4>large combustion</h4>
                 <p>Conventional heavy gasoline or diesel SUV/truck.</p>
-              </div>
-              <div className={`selection-card ${commuteVehicle === 'medium_gas' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('medium_gas'); }}>
+              </button>
+              <button type="button" className={`selection-card ${commuteVehicle === 'medium_gas' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('medium_gas'); }} aria-checked={commuteVehicle === 'medium_gas'} role="radio">
                 <h4>midsize car</h4>
                 <p>Standard fuel-efficient gasoline or hybrid compact.</p>
-              </div>
-              <div className={`selection-card ${commuteVehicle === 'electric' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('electric'); }}>
+              </button>
+              <button type="button" className={`selection-card ${commuteVehicle === 'electric' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('electric'); }} aria-checked={commuteVehicle === 'electric'} role="radio">
                 <h4>electric vehicle</h4>
                 <p>100% battery electric vehicle charged on the grid.</p>
-              </div>
-              <div className={`selection-card ${commuteVehicle === 'transit' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('transit'); }}>
+              </button>
+              <button type="button" className={`selection-card ${commuteVehicle === 'transit' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('transit'); }} aria-checked={commuteVehicle === 'transit'} role="radio">
                 <h4>public transit</h4>
                 <p>Shared grid networks (subways, rails, and buses).</p>
-              </div>
-              <div className={`selection-card ${commuteVehicle === 'active' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('active'); }} style={{ gridColumn: 'span 2' }}>
+              </button>
+              <button type="button" className={`selection-card ${commuteVehicle === 'active' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setCommuteVehicle('active'); }} style={{ gridColumn: 'span 2' }} aria-checked={commuteVehicle === 'active'} role="radio">
                 <h4>active walk / bike</h4>
                 <p>Human-powered active transit with zero carbon footprint.</p>
-              </div>
+              </button>
             </div>
           </div>
         );
@@ -251,22 +252,22 @@ export default function OnboardingWizard({ onComplete }) {
             
             <div className="slider-container" style={{ margin: '20px 0' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.85rem', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-dark)' }}>short-haul flights (&lt; 3 hrs)</span>
+                <span id="short-haul-label" style={{ fontSize: '0.85rem', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-dark)' }}>short-haul flights (&lt; 3 hrs)</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsShort(Math.max(0, flightsShort - 1)); }}>-</button>
-                  <span style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--color-burgundy)', width: '30px', textAlign: 'center' }}>{flightsShort}</span>
-                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsShort(flightsShort + 1); }}>+</button>
+                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsShort(Math.max(0, flightsShort - 1)); }} aria-label="Decrease short-haul flights" aria-describedby="short-haul-label">-</button>
+                  <span style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--color-burgundy)', width: '30px', textAlign: 'center' }} aria-live="polite" aria-atomic="true">{flightsShort}</span>
+                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsShort(flightsShort + 1); }} aria-label="Increase short-haul flights" aria-describedby="short-haul-label">+</button>
                 </div>
               </div>
             </div>
 
             <div className="slider-container" style={{ margin: '20px 0' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.85rem', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-dark)' }}>long-haul flights (&gt; 3 hrs)</span>
+                <span id="long-haul-label" style={{ fontSize: '0.85rem', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-dark)' }}>long-haul flights (&gt; 3 hrs)</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsLong(Math.max(0, flightsLong - 1)); }}>-</button>
-                  <span style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--color-burgundy)', width: '30px', textAlign: 'center' }}>{flightsLong}</span>
-                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsLong(flightsLong + 1); }}>+</button>
+                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsLong(Math.max(0, flightsLong - 1)); }} aria-label="Decrease long-haul flights" aria-describedby="long-haul-label">-</button>
+                  <span style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--color-burgundy)', width: '30px', textAlign: 'center' }} aria-live="polite" aria-atomic="true">{flightsLong}</span>
+                  <button type="button" className="btn-log-habit" style={{ borderColor: 'var(--color-border-dark)', color: 'var(--color-text-dark)' }} onClick={() => { soundManager.playClick(); setFlightsLong(flightsLong + 1); }} aria-label="Increase long-haul flights" aria-describedby="long-haul-label">+</button>
                 </div>
               </div>
             </div>
@@ -280,31 +281,31 @@ export default function OnboardingWizard({ onComplete }) {
             
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-muted)', marginBottom: '8px' }}>Heating Source</label>
-              <div className="selection-grid" style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
-                <div className={`selection-card ${housingHeat === 'gas_heating' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHousingHeat('gas_heating'); }} style={{ padding: '12px', textAlign: 'center' }}>
+              <div className="selection-grid" style={{ gridTemplateColumns: '1fr 1fr 1fr' }} role="radiogroup" aria-label="Heating source options">
+                <button type="button" className={`selection-card ${housingHeat === 'gas_heating' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHousingHeat('gas_heating'); }} style={{ padding: '12px', textAlign: 'center' }} aria-checked={housingHeat === 'gas_heating'} role="radio">
                   <h5 style={{ fontSize: '0.8rem' }}>gas</h5>
-                </div>
-                <div className={`selection-card ${housingHeat === 'electric_heat' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHousingHeat('electric_heat'); }} style={{ padding: '12px', textAlign: 'center' }}>
+                </button>
+                <button type="button" className={`selection-card ${housingHeat === 'electric_heat' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHousingHeat('electric_heat'); }} style={{ padding: '12px', textAlign: 'center' }} aria-checked={housingHeat === 'electric_heat'} role="radio">
                   <h5 style={{ fontSize: '0.8rem' }}>electric</h5>
-                </div>
-                <div className={`selection-card ${housingHeat === 'renewable' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHousingHeat('renewable'); }} style={{ padding: '12px', textAlign: 'center' }}>
+                </button>
+                <button type="button" className={`selection-card ${housingHeat === 'renewable' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHousingHeat('renewable'); }} style={{ padding: '12px', textAlign: 'center' }} aria-checked={housingHeat === 'renewable'} role="radio">
                   <h5 style={{ fontSize: '0.8rem' }}>solar / green</h5>
-                </div>
+                </button>
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-muted)', marginBottom: '8px' }}>Home Scale</label>
-              <div className="selection-grid" style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
-                <div className={`selection-card ${houseSize === 'small' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHouseSize('small'); }} style={{ padding: '12px', textAlign: 'center' }}>
+              <label id="home-scale-label" style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-text-muted)', marginBottom: '8px' }}>Home Scale</label>
+              <div className="selection-grid" style={{ gridTemplateColumns: '1fr 1fr 1fr' }} role="radiogroup" aria-labelledby="home-scale-label">
+                <button type="button" className={`selection-card ${houseSize === 'small' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHouseSize('small'); }} style={{ padding: '12px', textAlign: 'center' }} aria-checked={houseSize === 'small'} role="radio">
                   <h5 style={{ fontSize: '0.8rem' }}>apartment</h5>
-                </div>
-                <div className={`selection-card ${houseSize === 'medium' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHouseSize('medium'); }} style={{ padding: '12px', textAlign: 'center' }}>
+                </button>
+                <button type="button" className={`selection-card ${houseSize === 'medium' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHouseSize('medium'); }} style={{ padding: '12px', textAlign: 'center' }} aria-checked={houseSize === 'medium'} role="radio">
                   <h5 style={{ fontSize: '0.8rem' }}>standard</h5>
-                </div>
-                <div className={`selection-card ${houseSize === 'large' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHouseSize('large'); }} style={{ padding: '12px', textAlign: 'center' }}>
+                </button>
+                <button type="button" className={`selection-card ${houseSize === 'large' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setHouseSize('large'); }} style={{ padding: '12px', textAlign: 'center' }} aria-checked={houseSize === 'large'} role="radio">
                   <h5 style={{ fontSize: '0.8rem' }}>estate</h5>
-                </div>
+                </button>
               </div>
             </div>
           </div>
@@ -314,19 +315,19 @@ export default function OnboardingWizard({ onComplete }) {
           <div className="wizard-slide">
             <h2 className="onboarding-question-title">consumption style.</h2>
             <p className="onboarding-description">Supply chains, logistics, and manufacturing consume high volumes of fossil energy.</p>
-            <div className="selection-grid">
-              <div className={`selection-card ${consumption === 'high' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setConsumption('high'); }}>
+            <div className="selection-grid" role="radiogroup" aria-label="Consumption style options">
+              <button type="button" className={`selection-card ${consumption === 'high' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setConsumption('high'); }} aria-checked={consumption === 'high'} role="radio">
                 <h4>active buyer</h4>
                 <p>Frequently buy new apparel, gadget upgrades, and online goods.</p>
-              </div>
-              <div className={`selection-card ${consumption === 'average' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setConsumption('average'); }}>
+              </button>
+              <button type="button" className={`selection-card ${consumption === 'average' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setConsumption('average'); }} aria-checked={consumption === 'average'} role="radio">
                 <h4>standard</h4>
                 <p>Standard purchases as needed. Occasionally buy vintage.</p>
-              </div>
-              <div className={`selection-card ${consumption === 'minimalist' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setConsumption('minimalist'); }} style={{ gridColumn: 'span 2' }}>
+              </button>
+              <button type="button" className={`selection-card ${consumption === 'minimalist' ? 'selected' : ''}`} onClick={() => { soundManager.playClick(); setConsumption('minimalist'); }} style={{ gridColumn: 'span 2' }} aria-checked={consumption === 'minimalist'} role="radio">
                 <h4>minimalist / conscious</h4>
                 <p>Actively mended, patch, or buy secondhand to avoid new carbon events.</p>
-              </div>
+              </button>
             </div>
           </div>
         );
@@ -347,6 +348,7 @@ export default function OnboardingWizard({ onComplete }) {
                   color: 'var(--color-burgundy)',
                   animation: 'spin 2s linear infinite'
                 }} 
+                aria-hidden="true"
               />
             </div>
             
@@ -365,6 +367,11 @@ export default function OnboardingWizard({ onComplete }) {
                   width: `${progress}%`,
                   transition: 'width 0.1s linear'
                 }} 
+                role="progressbar"
+                aria-valuenow={progress}
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="Calculation progress"
               />
             </div>
             
@@ -374,7 +381,9 @@ export default function OnboardingWizard({ onComplete }) {
               minHeight: '40px',
               transition: 'opacity 0.25s ease',
               opacity: messageOpacity
-            }}>
+            }}
+               role="status"
+               aria-live="polite">
               {message}
             </p>
           </div>

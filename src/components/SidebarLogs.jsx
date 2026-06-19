@@ -2,6 +2,52 @@ import React from 'react';
 import { X, Trash2, CalendarRange } from 'lucide-react';
 
 export default function SidebarLogs({ isOpen, onClose, logs, onDeleteLog }) {
+  const containerRef = React.useRef(null);
+  const closeButtonRef = React.useRef(null);
+  React.useEffect(() => {
+    if (isOpen) {
+      // Focus close button on open
+      closeButtonRef.current?.focus();
+
+      // Escape listener
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') {
+          onClose();
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+
+      // Focus trap
+      const handleFocusTrap = (e) => {
+        if (!containerRef.current) return;
+        const focusableElements = containerRef.current.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusableElements.length === 0) return;
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              lastElement.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              firstElement.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      };
+      window.addEventListener('keydown', handleFocusTrap);
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('keydown', handleFocusTrap);
+      };
+    }
+  }, [isOpen, onClose]);
+
   return (
     <>
       {/* Dimmed backdrop background wrapping the sliding sidebar container */}
@@ -9,14 +55,26 @@ export default function SidebarLogs({ isOpen, onClose, logs, onDeleteLog }) {
         className={`sidebar-overlay ${isOpen ? 'active' : ''}`} 
         onClick={onClose}
       >
-        <div className="sidebar-container" onClick={(e) => e.stopPropagation()}>
+        <div 
+          ref={containerRef}
+          className="sidebar-container" 
+          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Ledger history"
+        >
           <div className="sidebar-header">
             <div>
               <h3 style={{ fontSize: '1.1rem', textTransform: 'uppercase' }}>ledger history</h3>
               <span style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>today's logs ledger</span>
             </div>
-            <button className="sidebar-close" onClick={onClose} aria-label="Close sidebar">
-              <X size={18} />
+            <button 
+              ref={closeButtonRef}
+              className="sidebar-close" 
+              onClick={onClose} 
+              aria-label="Close sidebar"
+            >
+              <X size={18} aria-hidden="true" />
             </button>
           </div>
 
@@ -43,7 +101,7 @@ export default function SidebarLogs({ isOpen, onClose, logs, onDeleteLog }) {
                         className="btn-delete-log"
                         aria-label={`Delete log ${log.title}`}
                       >
-                        <Trash2 size={13} />
+                        <Trash2 size={13} aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -51,7 +109,7 @@ export default function SidebarLogs({ isOpen, onClose, logs, onDeleteLog }) {
               </div>
             ) : (
               <div className="sidebar-empty-state">
-                <CalendarRange size={40} style={{ color: 'var(--color-text-muted)', opacity: 0.6 }} />
+                <CalendarRange size={40} style={{ color: 'var(--color-text-muted)', opacity: 0.6 }} aria-hidden="true" />
                 <div>
                   <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem', marginBottom: '4px', textTransform: 'uppercase' }}>ledger is clear</h4>
                   <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', maxWidth: '220px', margin: '0 auto', lineOffset: 1.3 }}>

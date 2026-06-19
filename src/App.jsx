@@ -15,10 +15,21 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [resetCount, setResetCount] = useState(0);
   const [themePreference, setThemePreference] = useState(() => {
     return localStorage.getItem('ecosync_theme') || 'auto';
   });
-  const [resetCount, setResetCount] = useState(0);
+
+  const historyButtonRef = React.useRef(null);
+  const prevSidebarOpenRef = React.useRef(sidebarOpen);
+
+  // Focus restoration hook for ledger drawer closing
+  useEffect(() => {
+    if (prevSidebarOpenRef.current && !sidebarOpen) {
+      historyButtonRef.current?.focus();
+    }
+    prevSidebarOpenRef.current = sidebarOpen;
+  }, [sidebarOpen]);
 
   // Sync theme preference to localStorage
   useEffect(() => {
@@ -251,16 +262,20 @@ export default function App() {
                 className="btn-editorial" 
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }}
                 title={timeOfDay === 'night' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label={timeOfDay === 'night' ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
-                {timeOfDay === 'night' ? <Sun size={14} /> : <Moon size={14} />}
+                {timeOfDay === 'night' ? <Sun size={14} aria-hidden="true" /> : <Moon size={14} aria-hidden="true" />}
               </button>
 
               <button 
+                ref={historyButtonRef}
                 onClick={() => { soundManager.playClick(); setSidebarOpen(true); }} 
                 className="btn-editorial" 
                 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                aria-expanded={sidebarOpen}
+                aria-label={`Open ledger history, current items: ${logs.length}`}
               >
-                <Layers size={12} /> history ({logs.length})
+                <Layers size={12} aria-hidden="true" /> history ({logs.length})
               </button>
               
               <button 
@@ -268,8 +283,9 @@ export default function App() {
                 className="btn-editorial" 
                 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
                 title="Reset baseline evaluation"
+                aria-label="Reset baseline evaluation"
               >
-                <RefreshCw size={12} /> reset
+                <RefreshCw size={12} aria-hidden="true" /> reset
               </button>
             </div>
           </header>
@@ -285,6 +301,8 @@ export default function App() {
               muted 
               playsInline
               style={{ filter: 'brightness(0.32)' }}
+              aria-hidden="true"
+              tabIndex={-1}
             />
             <div style={{ position: 'relative', zIndex: 1, padding: '0 5%', width: '100%', display: 'flex', flexWrap: 'wrap', gap: '48px', justifyContent: 'space-between', alignItems: 'center' }}>
               {/* Left Column: Hero Text */}

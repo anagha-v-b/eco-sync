@@ -46,18 +46,22 @@ export default function HabitLedger({ onLogHabit }) {
               fontSize: '0.7rem',
               borderRadius: 'var(--radius-xs)'
             }}
+            aria-label="Search carbon saving habits"
           />
-          <Search size={10} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
+          <Search size={10} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} aria-hidden="true" />
         </div>
       </div>
 
       {/* Category filter tabs */}
-      <div className="habit-filter-tabs">
+      <div className="habit-filter-tabs" role="tablist" aria-label="Habit categories">
         {categories.map(cat => (
           <button
             key={cat}
             onClick={() => { soundManager.playClick(); setFilter(cat); }}
             className={`habit-tab ${filter === cat ? 'active' : ''}`}
+            role="tab"
+            aria-selected={filter === cat}
+            aria-controls="habit-list-container"
           >
             {cat}
           </button>
@@ -65,7 +69,7 @@ export default function HabitLedger({ onLogHabit }) {
       </div>
 
       {/* Active catalog list */}
-      <div className="habit-list">
+      <div id="habit-list-container" className="habit-list" role="region" aria-live="polite" aria-label="Available habits list">
         {filteredHabits.length > 0 ? (
           filteredHabits.map(habit => {
             const isSuccess = successStates[habit.id];
@@ -91,7 +95,7 @@ export default function HabitLedger({ onLogHabit }) {
                     className={`btn-log-habit ${isSuccess ? 'success' : ''}`}
                     aria-label={`Log ${habit.title}`}
                   >
-                    {isSuccess ? <Check size={14} /> : <Plus size={14} />}
+                    {isSuccess ? <Check size={14} aria-hidden="true" /> : <Plus size={14} aria-hidden="true" />}
                   </button>
                 </div>
               </div>
